@@ -35,6 +35,79 @@ class SortedArraySet:
             self.array[i-1], self.array[i] = self.array[i], self.array[i-1] # element를 삽입한 후에는 정렬된 상태를 유지해야 하므로, element를 삽입한 인덱스부터 시작해서 왼쪽으로 이동하면서 정렬된 상태를 유지
         # 정렬 완료
 
+    def union(self, setB): # 합집합
+        setC = SortedArraySet
+
+        i = 0; j = 0;
+
+        while i < self.size and j < setB.size:
+            a = self.array[i]
+            b = setB.array[j]
+
+            if a == b:
+                setC.append(a)
+                i += 1; j += 1
+            elif a < b:
+                setC.append(a)
+                i += 1
+            else:
+                setC.append(b)
+                j += 1
+
+        while i < self.size:
+            setC.append(self.array[i])
+            i += 1
+
+        while j < setB.size:    
+            setC.append(setB.array[j])
+            j += 1
+        
+        return setC
+
+    def intersect(self, setB): # 교집합
+        setC = SortedArraySet
+
+        i = 0; j = 0;
+
+        while i < self.size and j < setB.size:
+            a = self.array[i]
+            b = setB.array[j]
+
+            if a == b:
+                setC.append(a)
+                i += 1; j += 1
+            elif a < b:
+                setC.append(a)
+                i += 1
+            else:
+                j += 1
+
+        return setC
+
+    def difference(self, setB): # 차집합
+        setC = SortedArraySet
+
+        i = 0; j = 0;
+
+        while i < self.size and j < setB.size:
+            a = self.array[i]
+            b = setB.array[j]
+
+            if a == b:
+                setC.append(a)
+                i += 1; j += 1
+            elif a < b:
+                setC.append(a)
+                i += 1
+            else:
+                j += 1
+
+        while i < self.size:
+            setC.append(self.array[i])
+            i += 1
+        
+        return setC
+    
     def __str__(self):
         return str(self.array[0:self.size]) # 배열의 처음부터 size까지만 출력
     
@@ -51,4 +124,12 @@ if __name__ == '__main__':
     print('Set A =', setA)
     print('Set B =', setB)
 
+    e = int(input('Input to delete: '))
+    setB.delete(e)
+    print('Set B:'  , setB)
 
+    print (setA == setB)
+
+    print('A U B : ', setA.union(setB))
+    print('A ^ B : ', setA.intersect(setB))
+    print('A - B : ', setA.difference(setB))
