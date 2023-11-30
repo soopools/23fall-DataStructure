@@ -25,6 +25,38 @@ def postOrder(root):
         postOrder(root.right)
         print('[%c] ' % root.data, end='') # 프린트 마지막에
 
+'''
+11/14/23 Thu
+
+제일 기본이 되는 구조임
+'''
+
+import queue
+
+def levelOrder(root):
+    Q = queue.Queue()
+    Q.put(root)
+
+    while not Q.empty():
+        node = Q.get() # 데이터 값 방문
+        print('[%c] ' % root.data, end='') # 데이터 값 방문하여 화면에 출력
+
+        # 방문 가능 노드 큐에 삽입
+        if root.left:
+            Q.put(node.left)
+
+        if root.right:
+            Q.put(node.right)
+
+def nodeCount(root): # 전체 노드 수를 알고 싶을 때
+    count = 0
+    if root: # root가 None이 아니면
+        count = 1 + nodeCount(root.left) + nodeCount(root.right) 
+        return count # 루트 노드 + 왼쪽 서브트리 노드 수 + 오른쪽 서브트리 노드 수, None이면 0 반환
+    
+
+
+
 if __name__ == '__main__':
     N4 = TreeNode('D', None, None) # Leaf Node: 단말
     N5 = TreeNode('E', None, None)
